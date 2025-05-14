@@ -45,7 +45,7 @@ namespace PersonalPunchClock.Modules
         public void Update(GameTime gt)
         {
             MouseState mouse = Mouse.GetState();
-            if (ClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released)
+            if (ClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released && Parent.IsActive)
             {
                 int NewID = 1;
                 

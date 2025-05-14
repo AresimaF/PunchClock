@@ -79,12 +79,12 @@ namespace PersonalPunchClock.Modules
             }
 
             MouseState mouse = Mouse.GetState();
-            if (ClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released)
+            if (ClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released  && Parent.IsActive)
             {
                 Parent.ClockEvents.RaiseClockEvent(new ClockEventArgs() { Activate = !Active, ID = this.ID });
                 LastGameTime = gt.TotalGameTime.TotalSeconds;
             }
-            if (RemoveClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released)
+            if (RemoveClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released && Parent.IsActive)
             {
                 Parent.KillEvents.RaiseKillEvent(new KillEventArgs() { ID = this.ID });
             }
