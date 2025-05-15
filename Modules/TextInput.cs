@@ -25,18 +25,21 @@ namespace PersonalPunchClock.Modules
 
         public void Update()
         {
-
+            //Find way to pull input events, convert to textbox
         }
 
         public void Draw(Rectangle rectangle)
         {
-
+            //Finding Text Pos + size
             Vector2 position = new Vector2(rectangle.X, rectangle.Y);
             Vector2 scale = new Vector2((float)rectangle.Width, (float)rectangle.Height);
 
             spriteBatch.Begin();
-
+            
+            //Text
             spriteBatch.DrawString(Font, Value, position, ForegroundColor, 0, new Vector2( 0, 0), scale, SpriteEffects.None, 0);
+
+            //Draw a line on top for a cursor, don't do it in-text
 
             spriteBatch.End();
 
