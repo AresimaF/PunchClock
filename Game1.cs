@@ -33,6 +33,7 @@ namespace PersonalPunchClock
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            Window.Title = "Personal Punch Clock 1.0 - by Aresima";
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
@@ -50,7 +51,7 @@ namespace PersonalPunchClock
 
             AddButton = new AddButton(this);
 
-            TimersSet.Add(new PunchTimer(this, "PunchTimer1") { SecondsPassed = 1});
+            TimersSet.Add(new PunchTimer(this, "PunchTimer1"));
 
             CalculateClockGrid();
 
