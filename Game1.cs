@@ -6,6 +6,7 @@ using PersonalPunchClock.Modules;
 using System;
 using System.Collections.Generic;
 
+
 namespace PersonalPunchClock
 {
     public class Game1 : Game
@@ -15,7 +16,9 @@ namespace PersonalPunchClock
 
         private Texture2D AddButtonTexture;
         private Texture2D SubtractButtonTexture;
-        
+
+
+
 
         public List<PunchTimer> TimersSet { get; } = new List<PunchTimer>();
         private AddButton AddButton;
@@ -30,6 +33,7 @@ namespace PersonalPunchClock
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
         }
@@ -42,6 +46,7 @@ namespace PersonalPunchClock
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
+
 
             AddButton = new AddButton(this);
 

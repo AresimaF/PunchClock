@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
+
 namespace PersonalPunchClock.Modules
 {
     public class PunchTimer
@@ -68,6 +69,9 @@ namespace PersonalPunchClock.Modules
             FaceFont = Parent.Content.Load<SpriteFont>("Digital Readout");
 
             ClickSound = Parent.Content.Load<Song>("Switch Click");
+
+            
+
         }
 
         public void Update(GameTime gt)
@@ -89,6 +93,7 @@ namespace PersonalPunchClock.Modules
                 Parent.KillEvents.RaiseKillEvent(new KillEventArgs() { ID = this.ID });
             }
             LastMouseState = mouse.LeftButton;
+
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -107,6 +112,8 @@ namespace PersonalPunchClock.Modules
             spritebatch.Draw(RemoveButton, new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60)), Color.White * 0.6f);
 
             spritebatch.DrawString(FaceFont, Time.ToString(@"hh\:mm\:ss"), new Vector2((int)Position.X + (int)(Scale * 190), (int)Position.Y + (int)(Scale * 505)), new Color(50, 200, 50), 0f, new Vector2(0,0), (float)Scale, SpriteEffects.None, 0);
+
+            
 
             spritebatch.End();
         }
