@@ -49,19 +49,7 @@ namespace PersonalPunchClock
             _graphics.ApplyChanges();
 
 
-            AddButton = new AddButton(this);
-
-            TimersSet.Add(new PunchTimer(this, "PunchTimer1"));
-
-            CalculateClockGrid();
-
-            if (TimersSet.Count > 0)
-            {
-                foreach (PunchTimer timer in TimersSet)
-                {
-                    timer.Initialize();
-                }
-            }
+            
 
             KillEvents.KillEvent += KillTimer;
 
@@ -75,6 +63,20 @@ namespace PersonalPunchClock
             AddButtonTexture = Content.Load<Texture2D>("Add Button");
             SubtractButtonTexture = Content.Load<Texture2D>("Subtract Button");
 
+            AddButton = new AddButton(this, new GameTime(), _spriteBatch);
+
+            TimersSet.Add(new PunchTimer(this, "PunchTimer1", new GameTime(), _spriteBatch));
+
+            CalculateClockGrid();
+
+            if (TimersSet.Count > 0)
+            {
+                foreach (PunchTimer timer in TimersSet)
+                {
+                    timer.Initialize();
+                }
+            }
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -85,7 +87,7 @@ namespace PersonalPunchClock
 
             // TODO: Add your update logic here
 
-            AddButton.Update(gameTime);
+            AddButton.Update();
 
             if (TimersSet.Count > 0)
             {
@@ -118,11 +120,11 @@ namespace PersonalPunchClock
                 for (int i = 0; i < TimersSet.Count; i++)
                 {
                     PunchTimer timer = TimersSet[i];
-                    timer.Draw(_spriteBatch);
+                    timer.Draw();
                 }
             }
 
-            AddButton.Draw(_spriteBatch);
+            AddButton.Draw();
 
             base.Draw(gameTime);
         }

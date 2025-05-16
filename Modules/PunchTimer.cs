@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 
 namespace PersonalPunchClock.Modules
@@ -20,6 +21,8 @@ namespace PersonalPunchClock.Modules
     public class PunchTimer
     {
         private Game1 Parent;
+        private SpriteBatch _spriteBatch;
+        private GameTime _gameTime;
 
         public Color BaseColor { get; set; } = new Color(160, 190, 255);
         public Color PunchColor { get; set; } = new Color(255, 195, 95);
@@ -43,18 +46,22 @@ namespace PersonalPunchClock.Modules
         private Texture2D RemoveButton;
 
         private SpriteFont FaceFont;
+        private SpriteFont LabelFont;
+
+        public TextInput Label;
 
         private Song ClickSound;
 
 
-        public PunchTimer(Game1 parent, string id)
+        public PunchTimer(Game1 parent, string id, GameTime gameTime, SpriteBatch spriteBatch)
         {
             Parent = parent;
+            _gameTime = gameTime;
+            _spriteBatch = spriteBatch;
 
             ID = id;
 
             Parent.ClockEvents.ClockEvent += Trigger;
-   
         }
 
         public void Initialize()
@@ -67,15 +74,20 @@ namespace PersonalPunchClock.Modules
             RemoveButton = Parent.Content.Load<Texture2D>("Subtract Button");
 
             FaceFont = Parent.Content.Load<SpriteFont>("Digital Readout");
+            LabelFont = Parent.Content.Load<SpriteFont>("Labels");
 
             ClickSound = Parent.Content.Load<Song>("Switch Click");
 
-            
+            Vector3 TextColor = BaseColor.ToVector3();
+
+            Label = new TextInput(_spriteBatch, _gameTime, Parent) { Font = LabelFont , ForegroundColor = new Color((int)(255 - (TextColor.X * 255)), (int)(255 - (TextColor.Y * 255)), (int)(255 - (TextColor.Z * 255))), Value = "Timer1"};
 
         }
 
         public void Update(GameTime gt)
         {
+            
+
             if (gt.TotalGameTime.TotalSeconds > LastGameTime && (gt.TotalGameTime.TotalSeconds - LastGameTime) > 1 && Active)
             {
                 SecondsPassed += Convert.ToInt32(Math.Truncate(gt.TotalGameTime.TotalSeconds - LastGameTime));
@@ -94,28 +106,31 @@ namespace PersonalPunchClock.Modules
             }
             LastMouseState = mouse.LeftButton;
 
+            Label.Update(gt);
+
         }
 
-        public void Draw(SpriteBatch spritebatch)
+        public void Draw()
         {
+
 
             ClickZone = new Rectangle((int)Position.X + 50, (int)Position.Y, (int)(Scale * 800) - 50, (int)(Scale * 300));
             RemoveClickZone = new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60));
 
-            spritebatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-            spritebatch.Draw(BaseOutlineTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), BaseColor);
-            spritebatch.Draw(PlungerOutlineTex, new Rectangle((int)Position.X, (int)Position.Y + (int)((Scale * 100) * Convert.ToInt32(Active)), (int)(Scale * 800), (int)(Scale * 800)), PunchColor);
-            spritebatch.Draw(PlungerTex, new Rectangle((int)Position.X, (int)Position.Y + (int)((Scale * 100) * Convert.ToInt32(Active)), (int)(Scale * 800), (int)(Scale * 800)), PunchColor);
-            spritebatch.Draw(BaseTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), BaseColor);
-            spritebatch.Draw(FaceTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), new Color(new Microsoft.Xna.Framework.Vector3(255, 255, 255)));
-            spritebatch.Draw(RemoveButton, new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60)), Color.White * 0.6f);
+            _spriteBatch.Draw(BaseOutlineTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), BaseColor);
+            _spriteBatch.Draw(PlungerOutlineTex, new Rectangle((int)Position.X, (int)Position.Y + (int)((Scale * 100) * Convert.ToInt32(Active)), (int)(Scale * 800), (int)(Scale * 800)), PunchColor);
+            _spriteBatch.Draw(PlungerTex, new Rectangle((int)Position.X, (int)Position.Y + (int)((Scale * 100) * Convert.ToInt32(Active)), (int)(Scale * 800), (int)(Scale * 800)), PunchColor);
+            _spriteBatch.Draw(BaseTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), BaseColor);
+            _spriteBatch.Draw(FaceTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), new Color(new Microsoft.Xna.Framework.Vector3(255, 255, 255)));
+            _spriteBatch.Draw(RemoveButton, new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60)), Color.White * 0.6f);
 
-            spritebatch.DrawString(FaceFont, Time.ToString(@"hh\:mm\:ss"), new Vector2((int)Position.X + (int)(Scale * 190), (int)Position.Y + (int)(Scale * 505)), new Color(50, 200, 50), 0f, new Vector2(0,0), (float)Scale, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(FaceFont, Time.ToString(@"hh\:mm\:ss"), new Vector2((int)Position.X + (int)(Scale * 190), (int)Position.Y + (int)(Scale * 505)), new Color(50, 200, 50), 0f, new Vector2(0,0), (float)Scale, SpriteEffects.None, 0);
 
-            
+            Label.Draw(new Rectangle((int)Position.X + (int)(150 * Scale), (int)Position.Y + (int)(350 * Scale), (int)(Scale * 500), (int)(Scale * 125)));
 
-            spritebatch.End();
+            _spriteBatch.End();
         }
 
         private void Trigger(object? sender, ClockEventArgs e)

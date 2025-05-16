@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Development/Projects/PersonalPunchClock/PersonalPunchClock/Content/Switch Click.mp3</SourceFile>
+  <SourceFile>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Switch Click.mp3</SourceFile>
   <SourceTime>2025-05-14T11:12:43.907432-07:00</SourceTime>
-  <DestFile>D:/Development/Projects/PersonalPunchClock/PersonalPunchClock/Content/bin/DesktopGL/Switch Click.xnb</DestFile>
-  <DestTime>2025-05-14T11:13:25.676566-07:00</DestTime>
+  <DestFile>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/bin/DesktopGL/Switch Click.xnb</DestFile>
+  <DestTime>2025-05-16T10:55:01.160291-07:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2025-04-05T03:10:54-07:00</ImporterTime>
   <Processor>SongProcessor</Processor>
@@ -15,6 +15,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>D:/Development/Projects/PersonalPunchClock/PersonalPunchClock/Content/bin/DesktopGL/Switch Click.ogg</string>
+    <string>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/bin/DesktopGL/Switch Click.ogg</string>
   </BuildOutput>
 </PipelineBuildEvent>

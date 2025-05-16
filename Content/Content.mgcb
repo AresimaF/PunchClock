@@ -32,6 +32,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Digital Readout.spritefont
 
+#begin Labels.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Labels.spritefont
+
 #begin Punch Timer Base Outline.png
 /importer:TextureImporter
 /processor:TextureProcessor

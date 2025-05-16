@@ -6,6 +6,7 @@
   <SourceFiles>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Add Button.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Digital Readout.spritefont</File>
+    <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Labels.spritefont</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Base Outline.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Base.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Clock Face.png</File>
@@ -15,6 +16,7 @@
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Switch Click.mp3</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
