@@ -80,7 +80,7 @@ namespace PersonalPunchClock.Modules
 
             Vector3 TextColor = BaseColor.ToVector3();
 
-            Label = new TextInput(_spriteBatch, _gameTime, Parent) { Font = LabelFont , ForegroundColor = new Color((int)(255 - (TextColor.X * 255)), (int)(255 - (TextColor.Y * 255)), (int)(255 - (TextColor.Z * 255))), Value = "Timer1"};
+            Label = new TextInput(_spriteBatch, _gameTime, Parent) { Font = LabelFont , ForegroundColor = new Color((int)(255 - (TextColor.X * 255)), (int)(255 - (TextColor.Y * 255)), (int)(255 - (TextColor.Z * 255))), Value = "Timer"};
 
         }
 
