@@ -37,7 +37,7 @@ namespace PersonalPunchClock
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            Window.Title = "Personal Punch Clock 1.1 - by Aresima";
+            Window.Title = "Personal Punch Clock 1.2 - by Aresima";
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
