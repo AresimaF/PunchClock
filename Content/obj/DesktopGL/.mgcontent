@@ -12,10 +12,16 @@
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Clock Face.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Plunger Outline.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Punch Timer Plunger.png</File>
+    <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Scroll Bar Cursor.png</File>
+    <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Scroll Bar End.png</File>
+    <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Scroll Bar Middle.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Subtract Button.png</File>
     <File>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Switch Click.mp3</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/Labels.spritefont</SourceFile>
-  <SourceTime>2025-04-05T03:07:32-07:00</SourceTime>
+  <SourceTime>2025-05-16T11:00:28.6724079-07:00</SourceTime>
   <DestFile>D:/Development/Projects/PersonalPunchClock/PunchClock/Content/bin/DesktopGL/Labels.xnb</DestFile>
-  <DestTime>2025-05-16T10:54:59.6924514-07:00</DestTime>
+  <DestTime>2025-05-17T08:59:12.8360253-07:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2025-04-05T03:10:54-07:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

@@ -16,7 +16,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 
-namespace PersonalPunchClock.Modules
+namespace PersonalPunchClock.Grimoires
 {
     public class PunchTimer
     {
@@ -32,7 +32,7 @@ namespace PersonalPunchClock.Modules
         public bool Active { get; set; } = false;
         public string ID { get; set; }
         private float Scale { get; set; }
-        private Vector2 Position { get; set; }
+        private Vector2 HomePosition { get; set; }
 
         private Rectangle ClickZone;
         private Rectangle RemoveClickZone;
@@ -113,6 +113,7 @@ namespace PersonalPunchClock.Modules
         public void Draw()
         {
 
+            Vector2 Position = new Vector2(HomePosition.X, HomePosition.Y - Parent.ScrollLocation);
 
             ClickZone = new Rectangle((int)Position.X + 50, (int)Position.Y, (int)(Scale * 800) - 50, (int)(Scale * 300));
             RemoveClickZone = new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60));
@@ -144,7 +145,7 @@ namespace PersonalPunchClock.Modules
 
         public void Reposition (Vector2 position, float scale = 0)
         {
-            Position = position;
+            HomePosition = position;
 
             if (scale != 0)
             {

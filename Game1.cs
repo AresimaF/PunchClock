@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Input.InputListeners;
 using PersonalPunchClock.Events;
-using PersonalPunchClock.Modules;
+using PersonalPunchClock.Grimoires;
 using System;
 using System.Collections.Generic;
 
@@ -17,15 +18,18 @@ namespace PersonalPunchClock
         private Texture2D AddButtonTexture;
         private Texture2D SubtractButtonTexture;
 
-
+        private MouseListener mouseListener = new MouseListener();
 
 
         public List<PunchTimer> TimersSet { get; } = new List<PunchTimer>();
         private AddButton AddButton;
+        private ScrollBar ScrollBar;
         public ClockEvents ClockEvents { get; } = new ClockEvents();
         public ButtonEvents ButtonEvents { get; } = new ButtonEvents();
         public KillEvents KillEvents { get; } = new KillEvents();
         public List<string>TimersToKill { get; set; } = new List<string>();
+        public float ScrollLocation { get; set; } = 0f;
+        public float MaximumScroll { get; set; } = 0f;
 
         public Game1()
         {
@@ -37,6 +41,7 @@ namespace PersonalPunchClock
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
+            mouseListener.MouseWheelMoved += MouseHandle;
         }
 
         protected override void Initialize()
@@ -64,6 +69,7 @@ namespace PersonalPunchClock
             SubtractButtonTexture = Content.Load<Texture2D>("Subtract Button");
 
             AddButton = new AddButton(this, new GameTime(), _spriteBatch);
+            ScrollBar = new ScrollBar(_spriteBatch, this);
 
             TimersSet.Add(new PunchTimer(this, "PunchTimer1", new GameTime(), _spriteBatch));
 
@@ -88,6 +94,8 @@ namespace PersonalPunchClock
             // TODO: Add your update logic here
 
             AddButton.Update();
+
+            mouseListener.Update(gameTime);
 
             if (TimersSet.Count > 0)
             {
@@ -125,6 +133,7 @@ namespace PersonalPunchClock
             }
 
             AddButton.Draw();
+            ScrollBar.Draw();
 
             base.Draw(gameTime);
         }
@@ -134,16 +143,7 @@ namespace PersonalPunchClock
 
             CalculateClockGrid();
 
-            //Copied code, may be useful?
-            /*if ((_graphics.PreferredBackBufferWidth != _graphics.GraphicsDevice.Viewport.Width) ||
-                (_graphics.PreferredBackBufferHeight != _graphics.GraphicsDevice.Viewport.Height))
-            {
-                _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
-                _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
-                _graphics.ApplyChanges();
-
-                States[_currentState].Rearrange();
-            }*/
+           
         }
 
         public void CalculateClockGrid()
@@ -152,13 +152,15 @@ namespace PersonalPunchClock
             int Height = _graphics.GraphicsDevice.Viewport.Height -100;
             int RequiredCells = TimersSet.Count;
 
+            float scale = 1f;
+
             if (RequiredCells == 1)
             {
-                TimersSet[0].Reposition(new Vector2(200, 200), 1);
+                TimersSet[0].Reposition(new Vector2(200, 200), Width / 800);
             }
             else if (RequiredCells == 2)
             {
-                float scale = ((float)Width - 200f) / 800f / 2f;
+                scale = ((float)Width - 200f) / 800f / 2f;
                 int x = (int)(800 * scale);
                 int y = 100;
 
@@ -169,7 +171,7 @@ namespace PersonalPunchClock
             }
             else
             {
-                float scale = ((float)Width - 200f) / 800f / 3f;
+                scale = ((float)Width - 200f) / 800f / 3f;
                 int x = (int)(800 * scale);
                 int y = 100;
 
@@ -188,11 +190,52 @@ namespace PersonalPunchClock
                 }
             }
 
+            MaximumScroll = (int)(TimersSet.Count / 3) * (800 * scale);
+
         }
 
         private void KillTimer(object? sender, KillEventArgs e)
         {
             TimersToKill.Add(e.ID);   
+        }
+
+        private void MouseHandle(object? sender,  MouseEventArgs e)
+        {
+            if (this.IsActive)
+            {
+                if (e.ScrollWheelDelta != 0)
+                {
+                    int ScrollWheelDelta = e.ScrollWheelDelta * -1;
+                    
+                    if (ScrollWheelDelta > 0)
+                    {
+                        if (ScrollLocation + ScrollWheelDelta > MaximumScroll)
+                        {
+                            ScrollLocation = MaximumScroll;
+                        }
+                        else
+                        {
+                            ScrollLocation += ScrollWheelDelta;
+                        }
+                    }
+                    else if (ScrollWheelDelta < 0)
+                    {
+                        if (ScrollLocation + ScrollWheelDelta < 0)
+                        {
+                            ScrollLocation = 0;
+                        }
+                        else
+                        {
+                            ScrollLocation += ScrollWheelDelta;
+                        }
+                    }
+                }
+            }
+        }
+
+        public Vector2 GetScreenSize()
+        {
+            return new Vector2(_graphics.GraphicsDevice.Viewport.Width, _graphics.GraphicsDevice.Viewport.Height);
         }
 
     }
