@@ -39,11 +39,11 @@ namespace PersonalPunchClock.Grimoires
         }
         public void Draw()
         {
-            ClickZone = new Rectangle(25, 25, 100, 100);
+            ClickZone = new Rectangle(15, 25, 100, 100);
 
             spritebatch.Begin();
 
-            spritebatch.Draw(Texture, new Rectangle(25, 25, 100, 100), Color.White);
+            spritebatch.Draw(Texture, ClickZone, Color.White);
 
             spritebatch.End();
         }
@@ -74,6 +74,56 @@ namespace PersonalPunchClock.Grimoires
         }
 
         
+    }
+
+    public class ResetButton
+    {
+
+        private SpriteBatch spritebatch;
+        private GameTime gametime;
+
+        private Rectangle ClickZone;
+        private ButtonState LastMouseState;
+        private double LastGameTime;
+
+        private Random Rand = new Random();
+
+        private Texture2D Texture;
+
+        public string ID { get; set; }
+        public Game1 Parent;
+
+        public ResetButton(Game1 parent, GameTime gt, SpriteBatch sb)
+        {
+            Parent = parent;
+
+            spritebatch = sb;
+            gametime = gt;
+
+            Texture = Parent.Content.Load<Texture2D>("Reset Button");
+        }
+        public void Draw()
+        {
+            ClickZone = new Rectangle(15, 150, 100, 100);
+
+            spritebatch.Begin();
+
+            spritebatch.Draw(Texture, ClickZone, Color.White);
+
+            spritebatch.End();
+        }
+
+        public void Update()
+        {
+            MouseState mouse = Mouse.GetState();
+            if (ClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released && Parent.IsActive)
+            {
+                Parent.ResetEvents.RaiseButtonEvent(new EventArgs());
+            }
+            LastMouseState = mouse.LeftButton;
+        }
+
+
     }
 
 }

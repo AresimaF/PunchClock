@@ -23,10 +23,12 @@ namespace PersonalPunchClock
 
         public List<PunchTimer> TimersSet { get; } = new List<PunchTimer>();
         private AddButton AddButton;
+        private ResetButton ResetButton;
         private ScrollBar ScrollBar;
         public ClockEvents ClockEvents { get; } = new ClockEvents();
         public ButtonEvents ButtonEvents { get; } = new ButtonEvents();
         public KillEvents KillEvents { get; } = new KillEvents();
+        public ResetEvents ResetEvents { get; } = new ResetEvents();
         public List<string>TimersToKill { get; set; } = new List<string>();
         public float ScrollLocation { get; set; } = 0f;
         public float MaximumScroll { get; set; } = 0f;
@@ -69,6 +71,7 @@ namespace PersonalPunchClock
             SubtractButtonTexture = Content.Load<Texture2D>("Subtract Button");
 
             AddButton = new AddButton(this, new GameTime(), _spriteBatch);
+            ResetButton = new ResetButton(this, new GameTime(), _spriteBatch);
             ScrollBar = new ScrollBar(_spriteBatch, this);
 
             TimersSet.Add(new PunchTimer(this, "PunchTimer1", new GameTime(), _spriteBatch));
@@ -94,6 +97,7 @@ namespace PersonalPunchClock
             // TODO: Add your update logic here
 
             AddButton.Update();
+            ResetButton.Update();
 
             mouseListener.Update(gameTime);
 
@@ -133,6 +137,7 @@ namespace PersonalPunchClock
             }
 
             AddButton.Draw();
+            ResetButton.Draw();
             ScrollBar.Draw();
 
             base.Draw(gameTime);

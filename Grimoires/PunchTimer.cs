@@ -36,6 +36,7 @@ namespace PersonalPunchClock.Grimoires
 
         private Rectangle ClickZone;
         private Rectangle RemoveClickZone;
+        private Rectangle ResetClickZone;
         private ButtonState LastMouseState;
 
         private Texture2D BaseOutlineTex;
@@ -44,6 +45,7 @@ namespace PersonalPunchClock.Grimoires
         private Texture2D PlungerTex;
         private Texture2D FaceTex;
         private Texture2D RemoveButton;
+        private Texture2D ResetButton;
 
         private SpriteFont FaceFont;
         private SpriteFont LabelFont;
@@ -62,6 +64,7 @@ namespace PersonalPunchClock.Grimoires
             ID = id;
 
             Parent.ClockEvents.ClockEvent += Trigger;
+            Parent.ResetEvents.ResetEvent += ResetSignal;
         }
 
         public void Initialize()
@@ -72,6 +75,7 @@ namespace PersonalPunchClock.Grimoires
             PlungerTex = Parent.Content.Load<Texture2D>("Punch Timer Plunger");
             FaceTex = Parent.Content.Load<Texture2D>("Punch Timer Clock Face");
             RemoveButton = Parent.Content.Load<Texture2D>("Subtract Button");
+            ResetButton = Parent.Content.Load<Texture2D>("Reset Button");
 
             FaceFont = Parent.Content.Load<SpriteFont>("Digital Readout");
             LabelFont = Parent.Content.Load<SpriteFont>("Labels");
@@ -104,6 +108,10 @@ namespace PersonalPunchClock.Grimoires
             {
                 Parent.KillEvents.RaiseKillEvent(new KillEventArgs() { ID = this.ID });
             }
+            if (ResetClickZone.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed && LastMouseState == ButtonState.Released && Parent.IsActive)
+            {
+                SetTimer(0);
+            }
             LastMouseState = mouse.LeftButton;
 
             Label.Update(gt);
@@ -117,6 +125,7 @@ namespace PersonalPunchClock.Grimoires
 
             ClickZone = new Rectangle((int)Position.X + 50, (int)Position.Y, (int)(Scale * 800) - 50, (int)(Scale * 300));
             RemoveClickZone = new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60));
+            ResetClickZone = new Rectangle((int)Position.X + (int)(550 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60));
 
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
@@ -126,6 +135,7 @@ namespace PersonalPunchClock.Grimoires
             _spriteBatch.Draw(BaseTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), BaseColor);
             _spriteBatch.Draw(FaceTex, new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * 800), (int)(Scale * 800)), new Color(new Microsoft.Xna.Framework.Vector3(255, 255, 255)));
             _spriteBatch.Draw(RemoveButton, new Rectangle((int)Position.X + (int)(625 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60)), Color.White * 0.6f);
+            _spriteBatch.Draw(ResetButton, new Rectangle((int)Position.X + (int)(550 * Scale), (int)Position.Y + (int)(685 * Scale), (int)(Scale * 60), (int)(Scale * 60)), Color.White * 0.6f);
 
             _spriteBatch.DrawString(FaceFont, Time.ToString(@"hh\:mm\:ss"), new Vector2((int)Position.X + (int)(Scale * 190), (int)Position.Y + (int)(Scale * 505)), new Color(50, 200, 50), 0f, new Vector2(0,0), (float)Scale, SpriteEffects.None, 0);
 
@@ -151,6 +161,16 @@ namespace PersonalPunchClock.Grimoires
             {
                 Scale = scale;
             }
+        }
+
+        public void SetTimer(int value = 0)
+        {
+            SecondsPassed = value;  
+        }
+
+        public void ResetSignal(object sender, EventArgs e)
+        {
+            SecondsPassed = 0;
         }
     }
 }

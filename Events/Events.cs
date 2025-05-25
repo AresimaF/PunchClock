@@ -53,5 +53,15 @@ namespace PersonalPunchClock.Events
         }
     }
 
+    public class ResetEvents
+    {
+        public event EventHandler<EventArgs> ResetEvent;
+
+        public void RaiseButtonEvent(EventArgs e)
+        {
+            ResetEvent?.Invoke(this, e);
+        }
+    }
+
 }
 
