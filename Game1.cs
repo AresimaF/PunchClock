@@ -32,6 +32,7 @@ namespace PersonalPunchClock
         public List<string>TimersToKill { get; set; } = new List<string>();
         public float ScrollLocation { get; set; } = 0f;
         public float MaximumScroll { get; set; } = 0f;
+        public Random Random { get; set; } = new Random();
 
         public Game1()
         {

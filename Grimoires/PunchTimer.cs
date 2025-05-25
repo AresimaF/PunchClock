@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using PersonalPunchClock.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
@@ -52,7 +54,10 @@ namespace PersonalPunchClock.Grimoires
 
         public TextInput Label;
 
-        private Song ClickSound;
+        private SoundEffect ClickSound;
+        private SoundEffectInstance ClickSoundInstance;
+
+        private Random Random;
 
 
         public PunchTimer(Game1 parent, string id, GameTime gameTime, SpriteBatch spriteBatch)
@@ -60,6 +65,8 @@ namespace PersonalPunchClock.Grimoires
             Parent = parent;
             _gameTime = gameTime;
             _spriteBatch = spriteBatch;
+
+            Random = Parent.Random;
 
             ID = id;
 
@@ -80,7 +87,9 @@ namespace PersonalPunchClock.Grimoires
             FaceFont = Parent.Content.Load<SpriteFont>("Digital Readout");
             LabelFont = Parent.Content.Load<SpriteFont>("Labels");
 
-            ClickSound = Parent.Content.Load<Song>("Switch Click");
+            using Stream soundfile = TitleContainer.OpenStream(@"Content\Switch Click.wav");
+            ClickSound = SoundEffect.FromStream(soundfile);
+            ClickSoundInstance = ClickSound.CreateInstance();
 
             Vector3 TextColor = BaseColor.ToVector3();
 
@@ -148,8 +157,12 @@ namespace PersonalPunchClock.Grimoires
         {
             if (e.ID == ID)
             {
+                float[] pitches = [-0.2f, 0f, 0.2f];
+
+                float RandomPitch = pitches[Random.Next(0, 3)];
                 Active = e.Activate;
-                MediaPlayer.Play(ClickSound);
+                ClickSoundInstance.Pitch = RandomPitch;
+                ClickSoundInstance.Play();
             }
         }
 

@@ -22,7 +22,7 @@ namespace PersonalPunchClock.Grimoires
         private ButtonState LastMouseState;
         private double LastGameTime;
 
-        private Random Rand = new Random();
+        private Random Rand;
 
         private Texture2D Texture;
 
@@ -31,6 +31,8 @@ namespace PersonalPunchClock.Grimoires
 
         public AddButton(Game1 parent, GameTime gt, SpriteBatch sb) {
             Parent = parent;
+
+            Rand = Parent.Random;
 
             spritebatch = sb;
             gametime = gt;
