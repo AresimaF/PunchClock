@@ -194,7 +194,7 @@ namespace PersonalPunchClock.Grimoires
                 {
                     CursorLocation = Value.Length;
                 }
-                else if (args.Key == Keys.Enter || args.Key == Keys.Escape)
+                else if (args.Key == Keys.Enter)
                 {
                     Active = false;
                 }
